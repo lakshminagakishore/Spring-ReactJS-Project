@@ -29,8 +29,19 @@ public class ProjectService {
 	public Project retrieveProjectById(String projId) {
 
 		Project project1 = projectRepo.findByProjectIdentifier(projId);
-				
+
 		return project1;
+	}
+
+	public void deleteProjectByIdentifier(String projId) {
+
+		Project project1 = projectRepo.findByProjectIdentifier(projId);
+		
+		if (project1 != null) {
+
+			projectRepo.delete(project1);
+		}
+
 	}
 
 }
