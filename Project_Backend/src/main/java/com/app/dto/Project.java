@@ -1,29 +1,34 @@
 package com.app.dto;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
-@Table(name = "PROJECT")
 public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PROJECT_ID")
 	private Long id;
-	@NotBlank
-	@Column(name = "PROJECT_NAME")
+
+	@NotBlank(message = "Project Name is required")
 	private String projectName;
-	@NotBlank
-	@Column(name = "IDENTIFIER")
+
+	@NotBlank(message = "Project Identifier is required")
+	@Column(updatable = false, unique = true)
 	private String projectIdentifier;
-	@Column(name = "NOTES")
+
 	private String description;
+
+	@JsonFormat(pattern="dd-mm-yyyy")
+	private Date createOn;
 
 	public Project() {
 		// TODO Auto-generated constructor stub
@@ -61,18 +66,27 @@ public class Project {
 		this.description = description;
 	}
 
-	public Project(Long id, @NotBlank String projectName, @NotBlank String projectIdentifier, String description) {
+	public Date getCreateOn() {
+		return createOn;
+	}
+
+	public void setCreateOn(Date createOn) {
+		this.createOn = createOn;
+	}
+
+	public Project(Long id, String projectName, String projectIdentifier, String description, Date createOn) {
 		super();
 		this.id = id;
 		this.projectName = projectName;
 		this.projectIdentifier = projectIdentifier;
 		this.description = description;
+		this.createOn = createOn;
 	}
 
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", projectName=" + projectName + ", projectIdentifier=" + projectIdentifier
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", createOn=" + createOn + "]";
 	}
 
 }
