@@ -41,6 +41,7 @@ public class ProjectCntroller {
 
 		Project project1 = projectService.saveProject(project);
 
+		System.out.println("test");
 		return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
 	}
 
